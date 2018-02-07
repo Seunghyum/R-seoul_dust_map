@@ -1,0 +1,4 @@
+# 최종데이터 생성
+: sudo Rscript make_final_data.R
+
+
