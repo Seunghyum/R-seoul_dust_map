@@ -8,6 +8,7 @@
 #
 
 library(shiny)
+# setwd("/Users/seunghyunmoon/Code/R_Studio/dust")
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -16,7 +17,6 @@ shinyServer(function(input, output) {
     
     date <- gsub("-","",input$date)
     datetime <- paste(date, input$time, sep="")
-    setwd("/Users/seunghyunmoon/Code/R_Studio/dust")
     fileName <- paste("./data/", datetime, ".csv", sep="")
     seoul_map_1 <<- read.csv(fileName, header=T, as.is=T)
     
