@@ -1,27 +1,15 @@
-#
-# This is the server logic of a Shiny web application. You can run the 
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-# 
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
 # setwd("/Users/seunghyunmoon/Code/R_Studio/dust")
 
-# Define server logic required to draw a histogram
 shinyServer(function(input, output) {
   
   getDateTime <- reactive({
     date <- gsub("-","",input$date)
-    datetime <<- paste(date, input$time, sep="")
+    datetime <- paste(date, input$time, sep="")
   })
   
   output$seoul <- renderPlotly({
     
-    #date <- gsub("-","",input$date)
-    #datetime <<- paste(date, input$time, sep="")
     datatime <- getDateTime()
     fileName <- paste("./data/", datetime, ".csv", sep="")
     
@@ -66,7 +54,7 @@ shinyServer(function(input, output) {
   
   output$click <- renderPrint({
     d <- event_data("plotly_click")
-    if (is.null(d)) "Click events appear here (double-click to clear)" else d
+    if (is.null(d)) "클릭한 지역의 정보가 표시됩니다." else d
   })
   
   output$table <- renderDataTable({

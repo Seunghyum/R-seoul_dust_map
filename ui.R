@@ -13,7 +13,6 @@ library(shiny)
 shinyUI(fluidPage(
   theme = shinytheme("cerulean"),
   navbarPage("서울 미세먼지 관련 지표"),
-  titlePanel("기간별 미세먼지 농도"),
   sidebarLayout(
     sidebarPanel(
       dateInput("date", "Date:", value = "2017-01-01", format = "yyyy-mm-dd"),
@@ -24,13 +23,14 @@ shinyUI(fluidPage(
     ),
     
     mainPanel(
-      plotlyOutput("seoul"),
-      textOutput("absence_data")
+      plotlyOutput("seoul")
     )
   ),
   fluidRow(
     column(12,
            verbatimTextOutput("click"),
+           hr(),
+           h3("읍/면/동 별 데이터"),
            dataTableOutput("table")
     )
   )
