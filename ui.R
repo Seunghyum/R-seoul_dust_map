@@ -11,6 +11,7 @@ library(shiny)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
+  theme = shinytheme("cerulean"),
   navbarPage("서울 미세먼지 관련 지표"),
   titlePanel("기간별 미세먼지 농도"),
   sidebarLayout(
@@ -28,7 +29,8 @@ shinyUI(fluidPage(
     )
   ),
   fluidRow(
-    column(10, offset = 1,
+    column(12,
+           verbatimTextOutput("click"),
            dataTableOutput("table")
     )
   )

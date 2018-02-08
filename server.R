@@ -13,14 +13,21 @@ library(shiny)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
   
+  getDateTime <- reactive({
+    date <- gsub("-","",input$date)
+    datetime <<- paste(date, input$time, sep="")
+  })
+  
   output$seoul <- renderPlotly({
     
-    date <- gsub("-","",input$date)
-    datetime <- paste(date, input$time, sep="")
+    #date <- gsub("-","",input$date)
+    #datetime <<- paste(date, input$time, sep="")
+    datatime <- getDateTime()
     fileName <- paste("./data/", datetime, ".csv", sep="")
-    seoul_map_1 <<- read.csv(fileName, header=T, as.is=T)
     
-    tryCatch(seoul_map_1[seoul_map_1$day == datetime,],
+    result <<- read.csv(fileName, header=T, as.is=T)
+    
+    tryCatch(result[result$day == datetime,],
              error = function(e) print("I am error"),
              warning = function(w) print("I am warning"),
              finally = NULL
@@ -28,18 +35,19 @@ shinyServer(function(input, output) {
     
     topicData <- reactive({
       switch(input$topic,
-             "SO2" = as.vector(seoul_map_1$SO2),
-             "O3" = as.vector(seoul_map_1$O3),
-             "CO" = as.vector(seoul_map_1$CO),
-             "PM10" = as.vector(seoul_map_1$PM10),
-             "PM25" = as.vector(seoul_map_1$PM25)
+             "SO2" = as.vector(result$SO2),
+             "O3" = as.vector(result$O3),
+             "CO" = as.vector(result$CO),
+             "PM10" = as.vector(result$PM10),
+             "PM25" = as.vector(result$PM25)
       )
     })
+    
     topic <- topicData()
     
     
     
-    p <- ggplot(seoul_map_1, aes(x=long, y=lat, text=paste(location.station.kr.name, "\n", input$topic,":", topic))) + 
+    p <- ggplot(result, aes(x=long, y=lat, text=paste(location.station.kr.name, "\n", input$topic,":", topic))) + 
       geom_polygon(aes(fill=topic, group=measuring.code)) + 
       theme(
         plot.background = element_blank()
@@ -56,6 +64,14 @@ shinyServer(function(input, output) {
     
   })
   
-  seoul_tb <<- read.csv("./data/representitive_region.csv", header=T, as.is=T)
-  output$table <- renderDataTable(seoul_tb)
+  output$click <- renderPrint({
+    d <- event_data("plotly_click")
+    if (is.null(d)) "Click events appear here (double-click to clear)" else d
+  })
+  
+  output$table <- renderDataTable({
+    datatime <- getDateTime()
+    Rep.fileName <- paste("./data/", datetime, "_rep", ".csv", sep="")
+    seoul_result.table <- read.csv(Rep.fileName, header=T, as.is=T)
+  })
 })
