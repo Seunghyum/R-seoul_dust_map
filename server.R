@@ -10,6 +10,7 @@ shinyServer(function(input, output) {
   
   output$seoul <- renderPlotly({
     
+    datatime <- getDateTime()
     fileName <- paste("./data/", datetime, ".csv", sep="")
     
     result <<- read.csv(fileName, header=T, as.is=T)
@@ -57,6 +58,7 @@ shinyServer(function(input, output) {
   })
   
   output$table <- renderDataTable({
+    datatime <- getDateTime()
     Rep.fileName <- paste("./data/", datetime, "_rep", ".csv", sep="")
     seoul_result.table <- read.csv(Rep.fileName, header=T, as.is=T)
   })
