@@ -1,7 +1,7 @@
 # sudo Rscript representitive_region_3.R
 
 # 시간에 따른 구역들의 값을 추출(테이블에 쓰일)
-setwd("/Users/seunghyunmoon/Code/R_Studio/dust/script")
+# setwd("/Users/seunghyunmoon/Code/R_Studio/dust/script")
 all <- read.csv("../data/final_data.csv", header=T, as.is=T)
 
 for( i in unique(all$day) ){

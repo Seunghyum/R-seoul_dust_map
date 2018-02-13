@@ -1,0 +1,49 @@
+
+h1.title1 {
+  color: black; 
+  font-weight: bold; 
+  margin: 0px 0px 10px 0px; 
+  padding: 0px 5px;
+  position: relative;
+}
+h1.title1:after {
+  content: '미세먼지';
+  color: transparent;
+  padding: 0px 5px;
+  
+  position: absolute;
+  left: 0;
+  border-bottom: 3px solid black;
+}
+h1.title2 {
+  color: black; 
+  font-weight: bold; 
+  margin: 0px 0px 10px 0px; 
+  padding: 0px 5px;
+  position: relative;
+}
+h1.title2:after {
+  content: '건강영향';
+  color: transparent;
+  padding: 0px 5px;
+  
+  position: absolute;
+  left: 0;
+  border-bottom: 3px solid black;
+}
+h1.title3 {
+  color: black; 
+  font-weight: bold; 
+  margin: 0px 0px 10px 0px; 
+  padding: 0px 5px;
+  position: relative;
+}
+h1.title3:after {
+  content: '데이터';
+  color: transparent;
+  padding: 0px 5px;
+  
+  position: absolute;
+  left: 0;
+  border-bottom: 3px solid black;
+}

@@ -1,5 +1,4 @@
 library(shiny)
-# setwd("/Users/seunghyunmoon/Code/R_Studio/dust")
 
 shinyServer(function(input, output) {
   
@@ -12,6 +11,8 @@ shinyServer(function(input, output) {
     
     datatime <- getDateTime()
     fileName <- paste("./data/", datetime, ".csv", sep="")
+    
+    print(fileName)
     
     result <<- read.csv(fileName, header=T, as.is=T)
     
@@ -33,13 +34,11 @@ shinyServer(function(input, output) {
     
     topic <- topicData()
     
-    
-    
     p <- ggplot(result, aes(x=long, y=lat, text=paste(location.station.kr.name, "\n", input$topic,":", topic))) + 
       geom_polygon(aes(fill=topic, group=measuring.code)) + 
       theme(
         plot.background = element_blank()
-        #,panel.background = element_blank()
+        ,panel.background = element_blank()
         ,panel.grid.major = element_blank()
         ,panel.grid.minor = element_blank()
         ,panel.border = element_blank()
@@ -50,16 +49,5 @@ shinyServer(function(input, output) {
     
     ggplotly(p, tooltip="text")
     
-  })
-  
-  output$click <- renderPrint({
-    d <- event_data("plotly_click")
-    if (is.null(d)) "클릭한 지역의 정보가 표시됩니다." else d
-  })
-  
-  output$table <- renderDataTable({
-    datatime <- getDateTime()
-    Rep.fileName <- paste("./data/", datetime, "_rep", ".csv", sep="")
-    seoul_result.table <- read.csv(Rep.fileName, header=T, as.is=T)
   })
 })
